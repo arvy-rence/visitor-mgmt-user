@@ -1,0 +1,4 @@
+GET http://localhost:8090/api/collections/admin/records
+Accept: application/json
+
+### Get all admin records
