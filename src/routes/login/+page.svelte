@@ -17,7 +17,7 @@
         PRIVACY POLICY
     </h1>
 </div>
-<div class="flex items-center justify-center h-screen bg-[#CDEEFD]">
+<div class="flex items-center justify-center h-screen bg-[url('/images/login-bg.png')] bg-cover">
     <div class="flex flex-col items-center text-primary justify-evenly h-screen w-full max-w-[375px] max-h-[612px]">
         <div class="font-khula">
             <img src="/images/logo.png" alt=""/>
@@ -29,17 +29,19 @@
                 
                 <input type="email"
                        id="email"
-                       class="px-1 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-md"
+                       class="px-1 border border-gray-300 w-full h-[2rem] pt-1 pl-2 bg-white bg-opacity-100 rounded-md shadow-inner"
+                       placeholder="Email"
                        bind:value={email}/>
                 <input type="password"
                        id="password"
-                       class="px-1 border border-gray-300 w-full mt-[.6rem] bg-primary bg-opacity-10 rounded-md"
+                       class="px-1 border border-gray-300 w-full h-[2rem] pt-1 pl-2 mt-[.6rem] bg-white bg-opacity-100 rounded-md shadow-inner"
+                       placeholder="Password"
                        bind:value={password}/>
                        <span class="text-end font-semibold pt-2">Forgot Password</span>
             </div>
         </div>
-        <div class="">
-            <Button title="Log in" onClick={login} isFilled={true}/>
+        <div class="flex items-center flex-col">
+            <Button class="w-[10rem] h-[2.2rem] uppercase font-bold bg-primary rounded-lg text-white" title="Log in" onClick={login} isFilled={true}/>
             <h2 class="text-center">
                 No account? 
                 <span class="font-bold">
