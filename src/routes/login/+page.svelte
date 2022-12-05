@@ -1,6 +1,4 @@
 <script lang="ts">
-    import Button from "$lib/components/Button.svelte";
-
     let email: String
     let password: String
 
@@ -18,15 +16,16 @@
     </h1>
 </div>
 <div class="flex items-center justify-center h-screen bg-[url('/images/login-bg.png')] bg-cover">
-    <div class="flex flex-col items-center text-primary justify-evenly h-screen w-full max-w-[375px] max-h-[612px]">
-        <div class="font-khula">
-            <img src="/images/logo.png" alt=""/>
-            <h1 class="text-lg text-center">VALENZUELA CITY LIBRARY</h1>
+    <div class="flex flex-col items-center text-primary justify-center h-[65%] w-full max-w-[375px] max-h-[612px] bg-white drop-shadow-lg">
+        <div class="font-khula pb-6 text-center">
+            <div class="flex justify-center">
+                <img src="/images/logo.png" class="flex justify-center w-1/2" alt=""/>
+            </div>
+            <h1 class="text-lg text-center font-bold">VALENZUELA CITY LIBRARY</h1>
             <h2 class="text-center text-base opacity-50 -mt-[.5rem]">GATE REGISTRATION</h2>
         </div>
-        <div class="w-full px-[2rem]">
-            <div class="font-khula pb-2 flex flex-col justify-between">
-                
+        <div class="w-full px-[2rem] pb-6">
+            <div class="font-khula pb-2 flex flex-col justify-between"> 
                 <input type="email"
                        id="email"
                        class="px-1 border border-gray-300 w-full h-[2rem] pt-1 pl-2 bg-white bg-opacity-100 rounded-md shadow-inner"
@@ -41,9 +40,11 @@
             </div>
         </div>
         <div class="flex items-center flex-col">
-            <Button class="w-[10rem] h-[2.2rem] uppercase font-bold bg-primary rounded-lg text-white" title="Log in" onClick={login} isFilled={true}/>
+            <button class="w-[10rem] h-[2.2rem] uppercase font-bold bg-primary rounded-lg text-white" on:click={login}>
+                Log in
+            </button>
             <h2 class="text-center">
-                No account? 
+                No account?
                 <span class="font-bold">
                     <a href="/signup">Register here.</a>
                 </span>

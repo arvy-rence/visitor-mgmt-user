@@ -225,7 +225,7 @@
             </button>
             <div class="block w-[3rem]"></div>
             <button class="w-[10rem] h-[2.2rem] uppercase font-bold bg-white rounded-lg border border-primary text-primary"
-                    onClick={() => {}}>
+                    on:click={() => {}}>
                 Cancel
             </button>
         </div>
