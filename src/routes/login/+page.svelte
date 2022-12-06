@@ -1,9 +1,11 @@
 <script lang="ts">
+    import {goto} from "$app/navigation"
+
     let email: String
     let password: String
 
-    function login() {
-        console.log(email, password)
+    async function login() {
+        await goto(`/${email}`)
     }
 </script>
 <div class="bg-white flex flex-row items-center pl-[2rem] h-[3rem]">
@@ -40,7 +42,8 @@
             </div>
         </div>
         <div class="flex items-center flex-col">
-            <button class="w-[10rem] h-[2.2rem] uppercase font-bold bg-primary rounded-lg text-white" on:click={login}>
+            <button class="w-[10rem] h-[2.2rem] uppercase font-bold bg-primary rounded-lg text-white" 
+                    on:click={login}>
                 Log in
             </button>
             <h2 class="text-center">

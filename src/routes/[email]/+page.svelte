@@ -1,12 +1,14 @@
 <script lang="ts">
+    import { goto } from "$app/navigation";
+
     export let data: any;
 
     const downloadQR = async () => {
-
+        
     }
 
     const logout = async () => {
-
+        await goto('/login')
     }
 </script>
 
@@ -23,10 +25,14 @@
     </div>
     <div class="flex flex-col justify-center items-center">
         <button class="w-[250px] h-[2.2rem] uppercase font-bold bg-primary rounded-lg text-white my-2">
-            <i class="fa-solid fa-circle-down pr-2"></i>
-            DOWNLOAD QR CODE
+            <a class=""
+               href="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data={data.email}&format=jpg" download="qrcode.jpg">
+                <i class="fa-solid fa-circle-down pr-2"></i>
+                DOWNLOAD QR CODE
+            </a>
         </button>
-        <button class="w-[250px] h-[2.2rem] uppercase font-bold bg-primary rounded-lg text-white my-2">
+        <button class="w-[250px] h-[2.2rem] uppercase font-bold bg-primary rounded-lg text-white my-2"
+                on:click={logout}>
             <i class="fa-solid fa-right-from-bracket pr-2"></i>
             LOG OUT
         </button>
