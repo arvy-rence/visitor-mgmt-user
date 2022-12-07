@@ -1,5 +1,6 @@
 <script lang="ts">
     import {barangay, cities, provinces} from "$lib/data/locationData.js";
+    import {goto} from "$app/navigation";
 
     let innerWidth = 0;
     let innerHeight = 0;
@@ -64,53 +65,57 @@
                 alert("Please agree to the Terms and Conditions.")
             }
         } else {
-            console.log("not all fields are filled up");
+            console.log('incomplete')
         }
     }
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight/>
 
-<div class="bg-white fixed flex flex-row items-center pl-[2rem] h-[3rem]">
-    <h1 class="text-primary text-xl">
-        TERMS & CONDITION
-    </h1>
-    <h1 class="px-[1rem]">|</h1>
-    <h1 class="text-primary text-xl">
-        PRIVACY POLICY
-    </h1>
-</div>
 <div class="flex items-center justify-center pt-12">
     <div class="fixed top-12 left-0"><img class="h-screen min-h-[600px]" src="/images/register-banner.png" alt=""/>
     </div>
     <div class="block w-2/5"></div>
     <div class="flex flex-col items-center text-primary justify-evenly w-1/2 font-base">
         <img src="/images/logo.png" alt="" class="w-[10rem] mb-4"/>
-        <p class="text-primary text-opacity-50 pb-10">ENTER YOUR DETAILS TO CREATE YOUR ACCOUNT</p>
+        <p class="text-primary text-opacity-70 pb-10 uppercase">
+            Enter your details to complete your registration
+        </p>
         <div class="w-full px-[2rem]">
             <div class="font-khula pb-2 flex flex-col justify-between">
                 <label for="first-name"
-                       class="text-xl">First Name</label>
+                       class="text-xl">
+                    First Name<sup class="text-secondary">*</sup>
+                </label>
                 <input type="text"
                        id="first-name"
                        class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
                        bind:value={firstName}/>
                 <label for="last-name"
-                       class="text-xl">Last Name</label>
+                       class="text-xl">
+                    Last Name<sup class="text-secondary">*</sup>
+                </label>
                 <input type="text"
                        id="last-name"
                        class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
                        bind:value={lastName}/>
 
                 <label for="birthday"
-                       class="text-xl">Birthday</label>
+                       class="text-xl">
+                    Birthday<sup class="text-secondary">*</sup>
+                </label>
                 <input type="date"
                        id="birthday"
-                       class="px-1 mb-5 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
+                       class="px-1 mb-1 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
                        bind:value={user_info.birthday}/>
+                <p class="text-primary opacity-70 text-sm mb-3">
+                    You can only change this once
+                </p>
 
                 <div class="flex flex-row mb-2">
-                    <p class="text-xl pr-6">Sex:</p>
+                    <p class="text-xl pr-6">
+                        Sex:<span class="text-secondary">*</span>
+                    </p>
                     <div class="flex flex-row">
                         <input type="radio"
                                id="sex-female"
@@ -133,15 +138,33 @@
                     </div>
                 </div>
 
+                <label for="province" class="text-xl">
+                    Province<span class="text-secondary">*</span>
+                </label>
+                <select id="province"
+                        class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
+                        bind:value={user_info.province}>
+                    {#each provinces as province}
+                        <option value={province}>{province}</option>
+                    {/each}
+                </select>
                 <label for="city-val"
-                       class="text-xl">City</label>
+                       class="text-xl">
+                    City<span class="text-secondary">*</span>
+                </label>
                 <select id="city-val"
                         class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
                         bind:value={user_info.city}
                         on:change={() => {
                             // check if city is valenzuela to set `is_valenzuela_resident` to true
-                            user_info.city === 'Valenzuela' ? user_info.is_valenzuela_resident = true : user_info.is_valenzuela_resident = false
-                            user_info.barangay = ""
+                            if (user_info.city === 'Valenzuela') {
+                                user_info.is_valenzuela_resident = true
+                                user_info.barangay = barangay[0]
+                                user_info.province = "Metro Manila"
+                            } else {
+                                user_info.is_valenzuela_resident = false
+                                user_info.barangay = ""
+                            }
                         }}>
                     {#each cities as city}
                         <option value={city}>{city}</option>
@@ -149,7 +172,9 @@
                 </select>
                 {#if user_info.city === "Valenzuela"}
                     <label for="barangay-val"
-                           class="text-xl">Barangay</label>
+                           class="text-xl">
+                        Barangay<span class="text-secondary">*</span>
+                    </label>
                     <select id="barangay-val"
                             class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
                             bind:value={user_info.barangay}>
@@ -164,68 +189,51 @@
                            class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
                            value="" disabled/>
                 {/if}
-                <label for="province" class="text-xl">Province</label>
-                <select id="province"
-                        class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
-                        bind:value={user_info.province}>
-                    {#each provinces as province}
-                        <option value={province}>{province}</option>
-                    {/each}
-                </select>
 
-                <label for="email" class="text-xl">Email</label>
-                <input type="email"
-                       id="email"
-                       class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
-                       bind:value={user_info.email}/>
-                <label for="mobile-number" class="text-xl">Contact Number</label>
+                <label for="mobile-number" class="text-xl">
+                    Contact Number<span class="text-secondary">*</span>
+                </label>
                 <input type="text"
                        id="mobile-number"
                        class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
                        bind:value={user_info.contact_number}/>
 
-                <label for="password" class="text-xl">Password</label>
-                <input type="password"
-                       id="password"
-                       class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
-                       bind:value={user_info.password}/>
-                <label for="confirm-password" class="text-xl">Confirm Password</label>
-                <input type="password"
-                       id="confirm-password"
-                       class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
-                       bind:value={confirmPassword}/>
-
-                <div class="flex flex-row">
+                <div class="flex flex-row pt-2">
                     <input type="checkbox"
                            id="tos"
                            class="px-1 -mt-1 mr-2 border border-gray-300"
                            bind:checked={terms}/>
-                    <label for="tos" class="text-xl">I agree with the Terms of Use.</label>
+                    <label for="tos" class="text-xl">
+                        I agree with the <a href="/tos" class="font-bold hover:underline">Terms of Use</a>.
+                    </label>
                 </div>
                 {#if !terms}
-                    <p class="text-gray-400 text-sm mb-3">You need to agree with the terms of use</p>
+                    <p class="text-primary opacity-70 text-sm mb-3">You need to agree with the terms of use</p>
                 {/if}
+                
                 <div class="flex flex-row">
                     <input type="checkbox"
                            id="dpp"
                            class="px-1 -mt-1 mr-2 border border-gray-300"
                            bind:checked={dpp}/>
                     <label for="dpp"
-                           class="text-xl">I have read and understand the <a href="/">Data Privacy Policy</a>.</label>
+                           class="text-xl">
+                        I have read and understand the <a href="/dpp" class="font-bold hover:underline">Data Privacy Policy</a>.
+                    </label>
                 </div>
                 {#if !dpp}
-                    <p class="text-gray-400 text-sm">You need to agree with the data privacy policy</p>
+                    <p class="text-primary opacity-70 text-sm">You need to agree with the data privacy policy</p>
                 {/if}
             </div>
         </div>
         <div class="mt-20 pb-16 flex flex-row">
-            <button class="w-[10rem] h-[2.2rem] uppercase font-bold bg-primary rounded-lg text-white"
+            <button class="w-[12rem] h-[2.2rem] uppercase font-bold bg-primary rounded-lg text-white"
                     on:click={() => submitInfo()}>
-                Submit
+                Complete Signup
             </button>
             <div class="block w-[3rem]"></div>
-            <button class="w-[10rem] h-[2.2rem] uppercase font-bold bg-white rounded-lg border border-primary text-primary"
-                    on:click={() => {}}>
+            <button class="w-[12rem] h-[2.2rem] uppercase font-bold bg-white rounded-lg border border-primary text-primary"
+                    on:click={async () => goto('/login')}>
                 Cancel
             </button>
         </div>

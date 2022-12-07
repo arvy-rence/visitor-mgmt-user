@@ -3,10 +3,6 @@
 
     export let data: any;
 
-    const downloadQR = async () => {
-        
-    }
-
     const logout = async () => {
         await goto('/login')
     }
@@ -14,7 +10,10 @@
 
 <div class="flex flex-col h-screen justify-center items-center">
     <h1 class="text-primary font-bold uppercase text-xl">
-        CONGRATULATIONS {data.email}
+        Welcome {data.email}
+    </h1>
+    <h1 class="text-primary opacity-70 text-md">
+        Save your QR code to gain access to ValACE Library's facilities
     </h1>
     <div class="drop-shadow-lg">
         <div class="py-[10%]">
