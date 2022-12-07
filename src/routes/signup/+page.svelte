@@ -1,5 +1,6 @@
 <script lang="ts">
     import {barangay, cities, provinces} from "$lib/data/locationData.js";
+    import {countryCodes} from "$lib/data/countryCode.js";
     import {goto} from "$app/navigation";
 
     let innerWidth = 0;
@@ -8,6 +9,10 @@
     // reactive binding for the `user_info.full_name`
     let firstName = "";
     let lastName = "";
+
+    // reactive binding for country code and contact number
+    let countryCode = countryCodes[0]
+    let contactNumber = ""
 
     // variable bindings for the dpp and terms
     let dpp = false;
@@ -21,7 +26,7 @@
         full_name: `${firstName} ${lastName}`,
         email: "",
         password: "",
-        contact_number: "",
+        contact_number: `${countryCode}${contactNumber}`,
         birthday: null,
         is_valenzuela_resident: false,
         city: "",
@@ -193,10 +198,23 @@
                 <label for="mobile-number" class="text-xl">
                     Contact Number<span class="text-secondary">*</span>
                 </label>
-                <input type="text"
-                       id="mobile-number"
-                       class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
-                       bind:value={user_info.contact_number}/>
+                <div class="flex flex-row">
+                    <div>
+                        <select id="countryCode"
+                                class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm text-center"
+                                bind:value={countryCode}>
+                            {#each countryCodes as code}
+                                <option value={code}>{code}</option>
+                            {/each}
+                        </select>
+                    </div>
+                    <div class="flex-grow">
+                        <input type="text"
+                               id="mobile-number"
+                               class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
+                               bind:value={contactNumber}/>
+                    </div>
+                </div>
 
                 <div class="flex flex-row pt-2">
                     <input type="checkbox"
@@ -210,7 +228,7 @@
                 {#if !terms}
                     <p class="text-primary opacity-70 text-sm mb-3">You need to agree with the terms of use</p>
                 {/if}
-                
+
                 <div class="flex flex-row">
                     <input type="checkbox"
                            id="dpp"
@@ -218,7 +236,8 @@
                            bind:checked={dpp}/>
                     <label for="dpp"
                            class="text-xl">
-                        I have read and understand the <a href="/dpp" class="font-bold hover:underline">Data Privacy Policy</a>.
+                        I have read and understand the <a href="/dpp" class="font-bold hover:underline">Data Privacy
+                        Policy</a>.
                     </label>
                 </div>
                 {#if !dpp}

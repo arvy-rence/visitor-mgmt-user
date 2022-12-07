@@ -261,3 +261,25 @@ export const provinces = [
     "Zamboanga del Sur",
     "Zamboanga Sibugay"
 ]
+
+export const provinceMap = {
+    "Metro Manila": [
+        "Valenzuela",
+        "Caloocan",
+        "Las Piñas",
+        "Makati",
+        "Malabon",
+        "Mandaluyong",
+        "† Manila",
+        "Marikina",
+        "Muntinlupa",
+        "Navotas",
+        "Parañaque",
+        "Pasay",
+        "Pasig",
+        "Pateros",
+        "Quezon City",
+        "San Juan",
+        "Taguig"
+    ]
+}

@@ -6,10 +6,20 @@
     let confirmPassword: string = ""
 
     async function sendVerificationEmail(): Promise<void> {
-        if (password !== confirmPassword || password === "") {
+        if (email === "") {
+            alert('You need to enter an email')
+            return
+        }
+        if (password === "") {
+            alert('You did not enter a valid password')
+            return
+        }
+        if (password !== confirmPassword) {
             alert('Password does not match')
             return
         }
+
+        // api call here
         alert('Follow the link included in the confirmation email to continue with the signup process')
     }
 
