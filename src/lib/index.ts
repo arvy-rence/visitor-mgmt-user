@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export default axios.create({
-    baseURL: 'http://localhost:5082/api'
+    baseURL: 'https://vcl-pass.herokuapp.com/api/'
 });

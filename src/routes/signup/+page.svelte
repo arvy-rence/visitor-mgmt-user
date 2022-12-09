@@ -1,7 +1,7 @@
 <script lang="ts">
     import {barangay, cities, provinces} from "$lib/data/locationData.js";
     import {countryCodes} from "$lib/data/countryCode.js";
-    import {goto} from "$app/navigation";
+    import toast, {Toaster} from "svelte-french-toast";
 
     let innerWidth = 0;
     let innerHeight = 0;
@@ -14,25 +14,28 @@
     let countryCode = countryCodes[0]
     let contactNumber = ""
 
+    // temporary binding for other variables
+    let birthday = null
+    let isValenzuelaResident = false
+    let city = ""
+    let barangaySelection = ""
+    let province = ""
+    let sex = null
+
     // variable bindings for the dpp and terms
     let dpp = false;
     let terms = false;
 
-    // variable bindings for confirmation/validation
-    let confirmPassword = "";
-
     // contains the info to be sent to the backend
     $: user_info = {
-        full_name: `${firstName} ${lastName}`,
-        email: "",
-        password: "",
+        full_name: `${firstName.trim()} ${lastName.trim()}`,
         contact_number: `${countryCode}${contactNumber}`,
-        birthday: null,
-        is_valenzuela_resident: false,
-        city: "",
-        barangay: "",
-        province: "",
-        sex: null,
+        birthday: birthday,
+        is_valenzuela_resident: isValenzuelaResident,
+        city: city,
+        barangay: barangaySelection,
+        province: province,
+        sex: sex,
     }
 
     $: console.log(user_info)
@@ -40,8 +43,6 @@
     const checkInfo = () => {
         // check if the user has filled up all the required fields
         return !(user_info.full_name === " "
-            || user_info.email === ""
-            || user_info.password === ""
             || user_info.contact_number === ""
             || user_info.birthday === null
             || user_info.city === ""
@@ -51,32 +52,50 @@
 
     const submitInfo = () => {
         // check if the user has filled up all the required fields
-        if (checkInfo()) {
-            // check if the user has agreed to the terms and conditions
-            if (terms) {
-                // check if the user has agreed to the dpp
-                if (dpp) {
-                    // check if the password and confirm password are the same
-                    if (user_info.password === confirmPassword) {
-                        // send the data to the backend
-                        console.log("sending data to the backend");
-                    } else {
-                        alert("Passwords do not match.")
-                    }
-                } else {
-                    alert("Please agree to the Data Privacy Policy.")
-                }
-            } else {
-                alert("Please agree to the Terms and Conditions.")
-            }
-        } else {
+        if (!checkInfo()) {
             console.log('incomplete')
+            // check if the user has agreed to the terms and conditions
+            toast.error('Fields incomplete', {
+                style: 'font-khula',
+                position: 'top-right'
+            })
+            return
         }
+        if (!terms) {
+            // check if the user has agreed to the terms
+            toast.error('You need to agree to the terms', {
+                style: 'font-khula',
+                position: 'top-right'
+            })
+            return
+        }
+        if (!dpp) {
+            toast.error('You need to agree to the data privacy and policy', {
+                style: 'font-khula',
+                position: 'top-right'
+            })
+            return
+        }
+        // send the data to the backend
+        toast.promise(
+            fetch('https://dummyjson.com/products/1')
+                .then(res => res.json())
+                .then(json => console.log(json)),
+            {
+                error: 'Failed to complete signup',
+                success: 'Successfully updated account details',
+                loading: 'Creating account'
+            },
+            {
+                position: "top-right"
+            }
+        )
     }
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight/>
 
+<Toaster />
 <div class="flex items-center justify-center pt-12">
     <div class="fixed top-12 left-0"><img class="h-screen min-h-[600px]" src="/images/register-banner.png" alt=""/>
     </div>
@@ -112,7 +131,7 @@
                 <input type="date"
                        id="birthday"
                        class="px-1 mb-1 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
-                       bind:value={user_info.birthday}/>
+                       bind:value={birthday}/>
                 <p class="text-primary opacity-70 text-sm mb-3">
                     You can only change this once
                 </p>
@@ -126,7 +145,7 @@
                                id="sex-female"
                                name="sex"
                                class="px-1 -mt-1 mr-2 border border-gray-300"
-                               bind:group={user_info.sex}
+                               bind:group={sex}
                                value={false}/>
                         <label for="sex-female"
                                class="text-xl pr-10">Female</label>
@@ -136,7 +155,7 @@
                                id="sex-male"
                                name="sex"
                                class="px-1 -mt-1 mr-2 border border-gray-300"
-                               bind:group={user_info.sex}
+                               bind:group={sex}
                                value={true}/>
                         <label for="sex-male"
                                class="text-xl">Male</label>
@@ -159,16 +178,16 @@
                 </label>
                 <select id="city-val"
                         class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
-                        bind:value={user_info.city}
+                        bind:value={city}
                         on:change={() => {
                             // check if city is valenzuela to set `is_valenzuela_resident` to true
-                            if (user_info.city === 'Valenzuela') {
-                                user_info.is_valenzuela_resident = true
-                                user_info.barangay = barangay[0]
-                                user_info.province = "Metro Manila"
+                            if (city === 'Valenzuela') {
+                                isValenzuelaResident = true
+                                barangaySelection = barangay[0]
+                                province = "Metro Manila"
                             } else {
-                                user_info.is_valenzuela_resident = false
-                                user_info.barangay = ""
+                                isValenzuelaResident = false
+                                barangaySelection = ""
                             }
                         }}>
                     {#each cities as city}
@@ -182,7 +201,7 @@
                     </label>
                     <select id="barangay-val"
                             class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
-                            bind:value={user_info.barangay}>
+                            bind:value={barangaySelection}>
                         {#each barangay as brgy}
                             <option value={brgy}>{brgy}</option>
                         {/each}
@@ -222,7 +241,7 @@
                            class="px-1 -mt-1 mr-2 border border-gray-300"
                            bind:checked={terms}/>
                     <label for="tos" class="text-xl">
-                        I agree with the <a href="/tos" class="font-bold hover:underline">Terms of Use</a>.
+                        I agree with the <a href="/terms/tos" class="font-bold hover:underline">Terms of Use</a>.
                     </label>
                 </div>
                 {#if !terms}
@@ -236,7 +255,7 @@
                            bind:checked={dpp}/>
                     <label for="dpp"
                            class="text-xl">
-                        I have read and understand the <a href="/dpp" class="font-bold hover:underline">Data Privacy
+                        I have read and understand the <a href="/terms/dpp" class="font-bold hover:underline">Data Privacy
                         Policy</a>.
                     </label>
                 </div>
@@ -249,11 +268,6 @@
             <button class="w-[12rem] h-[2.2rem] uppercase font-bold bg-primary rounded-lg text-white"
                     on:click={() => submitInfo()}>
                 Complete Signup
-            </button>
-            <div class="block w-[3rem]"></div>
-            <button class="w-[12rem] h-[2.2rem] uppercase font-bold bg-white rounded-lg border border-primary text-primary"
-                    on:click={async () => goto('/login')}>
-                Cancel
             </button>
         </div>
     </div>
