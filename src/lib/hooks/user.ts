@@ -14,3 +14,14 @@ export const signup = async (email: string, password: string) => {
     }
 }
 
+export const updateUserInfo = async (user: any) => {
+    try {
+        const {data} = await axios.patch(`/user/${user.email}`, user)
+        return data
+    } catch (e) {
+        return {
+            error: e
+        }
+    }
+}
+
