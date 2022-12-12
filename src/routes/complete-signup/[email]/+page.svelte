@@ -2,13 +2,12 @@
     import {barangay, cities, provinces} from "$lib/data/locationData.js";
     import {countryCodes} from "$lib/data/countryCode.js";
     import toast, {Toaster} from "svelte-french-toast";
-    import axios from "$lib/index"
     import {toastOptions} from "$lib/util/options";
     import {updateUserInfo} from "$lib/hooks/user";
     import {goto} from "$app/navigation";
     import {onMount} from "svelte";
 
-    // binding for data from +page.js
+    // binding for data from +page.server.ts
     export let data
 
     let innerWidth = 0;
@@ -98,9 +97,24 @@
         }, 2000)
     }
 
-    onMount(() => {
-
+    onMount(async () => {
+        if (window.location.hash === "") {
+            setTimeout(async () => {
+                await goto('/login')
+            }, 2000)
+        }
     })
+
+    // for prompt before leaving the page
+    let ask = true
+    window.onbeforeunload = function (e) {
+        if(!ask) return null
+        e = e || window.event;
+        //old browsers
+        if (e) {e.returnValue = 'Sure?';}
+        //safari, chrome(chrome ignores text)
+        return 'Sure?';
+    };
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight/>
@@ -115,8 +129,8 @@
         <p class="text-primary text-opacity-70 pb-2 uppercase">
             Enter your details to complete your registration
         </p>
-        <p class="text-primary text-opacity-70 pb-10 uppercase font-bold">
-            DO NOT NAVIGATE AWAY FROM THIS PAGE TO PROPERLY COMPLETE YOUR REGISTRATION
+        <p class="text-secondary text-opacity-80 pb-10 uppercase font-bold">
+            DO NOT CLOSE THIS WINDOW TO PROPERLY COMPLETE YOUR REGISTRATION
         </p>
         <form on:submit|preventDefault={submitInfo} class="w-[90%]">
             <div class="w-full">
@@ -280,8 +294,7 @@
                         <label for="dpp"
                                class="text-xl">
                             I have read and understand the <a href="/terms/dpp" class="font-bold hover:underline">Data
-                            Privacy
-                            Policy</a>.
+                            Privacy Policy</a>.
                         </label>
                     </div>
                     {#if !dpp}
