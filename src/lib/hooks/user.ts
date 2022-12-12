@@ -1,4 +1,5 @@
 import axios from '$lib/index';
+import type {IReceivedUser} from "$types/User";
 
 export const signup = async (email: string, password: string) => {
     try {
@@ -14,13 +15,25 @@ export const signup = async (email: string, password: string) => {
     }
 }
 
-export const updateUserInfo = async (user: any) => {
+export const updateUserInfo = async (user: IReceivedUser) => {
     try {
         const {data} = await axios.patch(`/user/${user.email}`, user)
         return data
     } catch (e) {
         return {
             error: e
+        }
+    }
+}
+
+
+export const getUserInfo = async (email: string): Promise<IReceivedUser|any> => {
+    try {
+        const {data} = await axios.get(`/user/${email}`)
+        return data
+    } catch (e) {
+        return {
+            error: "not found"
         }
     }
 }
