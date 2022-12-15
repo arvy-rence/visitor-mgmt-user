@@ -1,14 +1,39 @@
 <script lang="ts">
     import {goto} from "$app/navigation"
+    import {getUserDetails} from "$lib/hooks/auth";
+    import toast, {Toaster} from "svelte-french-toast";
+    import {toastOptions} from "$lib/util/options";
 
     let email: String
     let password: String
 
     async function login() {
-        await goto(`/${email}`)
+        const user = getUserDetails(email, password)
+
+        await toast.promise(
+            user,
+            {
+                loading: 'Logging in',
+                success: 'Login Successful',
+                error: 'Error logging in'
+            },
+            toastOptions,
+        )
+
+        if (user) {
+            toast('Redirecting to dashboard', {
+                ...toastOptions,
+                icon: '✅',
+                duration: 2000
+            })
+            setTimeout(async () => {
+                await goto(`/user/view/${email}`)
+            }, 1000)
+        }
     }
 </script>
 
+<Toaster/>
 <div class="flex items-center justify-center h-screen bg-[url('/images/login-bg.png')] bg-cover">
     <div class="flex flex-col items-center text-primary justify-center h-[65%] w-full max-w-[375px] max-h-[612px] bg-white drop-shadow-lg">
         <div class="font-khula pb-6 text-center">
@@ -44,7 +69,7 @@
             <h2 class="text-center">
                 No account?
                 <span class="font-bold">
-                    <a href="/signup-start">Register here.</a>
+                    <a href="/signup">Register here.</a>
                 </span>
             </h2>
         </div>

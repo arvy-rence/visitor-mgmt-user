@@ -6,6 +6,7 @@
     import {updateUserInfo} from "$lib/hooks/user";
     import {goto} from "$app/navigation";
     import {onMount} from "svelte";
+    import Guard from "$components/Guard.svelte";
 
     // binding for data from +page.server.ts
     export let data
@@ -116,98 +117,99 @@
 
 <svelte:window bind:innerWidth bind:innerHeight/>
 
-<Toaster />
-<div class="flex items-center justify-center pt-12">
-    <div class="fixed top-12 left-0"><img class="h-screen min-h-[600px]" src="/images/register-banner.png" alt=""/>
-    </div>
-    <div class="block w-2/5"></div>
-    <div class="flex flex-col items-center text-primary justify-evenly w-1/2 font-base">
-        <img src="/images/logo.png" alt="" class="w-[10rem] mb-4"/>
-        <p class="text-primary text-opacity-70 pb-2 uppercase">
-            Keep your information up to date here
-        </p>
-        <form on:submit|preventDefault={submitInfo} class="w-[90%]">
-            <div class="w-full">
-                <label for="email"
-                       class="text-xl">
-                    Email<sup class="text-secondary">*</sup>
-                </label>
-                <input type="text"
-                       id="email"
-                       class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-20 rounded-sm"
-                       bind:value={data.email}
-                       disabled/>
-                <div class="font-khula pb-2 flex flex-col justify-between">
-                    <label for="first-name"
+<Guard>
+    <Toaster/>
+    <div class="flex items-center justify-center pt-12">
+        <div class="fixed top-12 left-0"><img class="h-screen min-h-[600px]" src="/images/register-banner.png" alt=""/>
+        </div>
+        <div class="block w-2/5"></div>
+        <div class="flex flex-col items-center text-primary justify-evenly w-1/2 font-base">
+            <img src="/images/logo.png" alt="" class="w-[10rem] mb-4"/>
+            <p class="text-primary text-opacity-70 pb-2 uppercase">
+                Keep your information up to date here
+            </p>
+            <form on:submit|preventDefault={submitInfo} class="w-[90%]">
+                <div class="w-full">
+                    <label for="email"
                            class="text-xl">
-                        Full Name<sup class="text-secondary">*</sup>
+                        Email<sup class="text-secondary">*</sup>
                     </label>
                     <input type="text"
-                           id="first-name"
-                           class="px-1 mb-1 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
-                           bind:value={fullName}
+                           id="email"
+                           class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-20 rounded-sm"
+                           bind:value={data.email}
                            disabled/>
-                    <p class="text-primary opacity-70 text-sm mb-3">
-                        You can't update this information
-                    </p>
-
-                    <label for="birthday"
-                           class="text-xl">
-                        Birthday<sup class="text-secondary">*</sup>
-                    </label>
-                    <input type="date"
-                           id="birthday"
-                           class="px-1 mb-1 border border-gray-300 w-full bg-primary bg-opacity-20 rounded-sm"
-                           bind:value={birthday}
-                           disabled/>
-                    <p class="text-primary opacity-70 text-sm mb-3">
-                        You can't update this information
-                    </p>
-
-                    <div class="flex flex-row mb-2">
-                        <p class="text-xl pr-6">
-                            Sex:<span class="text-secondary">*</span>
+                    <div class="font-khula pb-2 flex flex-col justify-between">
+                        <label for="first-name"
+                               class="text-xl">
+                            Full Name<sup class="text-secondary">*</sup>
+                        </label>
+                        <input type="text"
+                               id="first-name"
+                               class="px-1 mb-1 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
+                               bind:value={fullName}
+                               disabled/>
+                        <p class="text-primary opacity-70 text-sm mb-3">
+                            You can't update this information
                         </p>
-                        <div class="flex flex-row">
-                            <input type="radio"
-                                   id="sex-female"
-                                   name="sex"
-                                   class="px-1 -mt-1 mr-2 border border-gray-300"
-                                   bind:group={sex}
-                                   value={false}/>
-                            <label for="sex-female"
-                                   class="text-xl pr-10">Female</label>
-                        </div>
-                        <div class="flex flex-row">
-                            <input type="radio"
-                                   id="sex-male"
-                                   name="sex"
-                                   class="px-1 -mt-1 mr-2 border border-gray-300"
-                                   bind:group={sex}
-                                   value={true}/>
-                            <label for="sex-male"
-                                   class="text-xl">Male</label>
-                        </div>
-                    </div>
 
-                    <label for="province" class="text-xl">
-                        Province<span class="text-secondary">*</span>
-                    </label>
-                    <select id="province"
-                            class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
-                            bind:value={user_info.province}>
-                        {#each provinces as province}
-                            <option value={province}>{province}</option>
-                        {/each}
-                    </select>
-                    <label for="city-val"
-                           class="text-xl">
-                        City<span class="text-secondary">*</span>
-                    </label>
-                    <select id="city-val"
-                            class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
-                            bind:value={city}
-                            on:change={() => {
+                        <label for="birthday"
+                               class="text-xl">
+                            Birthday<sup class="text-secondary">*</sup>
+                        </label>
+                        <input type="date"
+                               id="birthday"
+                               class="px-1 mb-1 border border-gray-300 w-full bg-primary bg-opacity-20 rounded-sm"
+                               bind:value={birthday}
+                               disabled/>
+                        <p class="text-primary opacity-70 text-sm mb-3">
+                            You can't update this information
+                        </p>
+
+                        <div class="flex flex-row mb-2">
+                            <p class="text-xl pr-6">
+                                Sex:<span class="text-secondary">*</span>
+                            </p>
+                            <div class="flex flex-row">
+                                <input type="radio"
+                                       id="sex-female"
+                                       name="sex"
+                                       class="px-1 -mt-1 mr-2 border border-gray-300"
+                                       bind:group={sex}
+                                       value={false}/>
+                                <label for="sex-female"
+                                       class="text-xl pr-10">Female</label>
+                            </div>
+                            <div class="flex flex-row">
+                                <input type="radio"
+                                       id="sex-male"
+                                       name="sex"
+                                       class="px-1 -mt-1 mr-2 border border-gray-300"
+                                       bind:group={sex}
+                                       value={true}/>
+                                <label for="sex-male"
+                                       class="text-xl">Male</label>
+                            </div>
+                        </div>
+
+                        <label for="province" class="text-xl">
+                            Province<span class="text-secondary">*</span>
+                        </label>
+                        <select id="province"
+                                class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
+                                bind:value={user_info.province}>
+                            {#each provinces as province}
+                                <option value={province}>{province}</option>
+                            {/each}
+                        </select>
+                        <label for="city-val"
+                               class="text-xl">
+                            City<span class="text-secondary">*</span>
+                        </label>
+                        <select id="city-val"
+                                class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
+                                bind:value={city}
+                                on:change={() => {
                             // check if city is valenzuela to set `is_valenzuela_resident` to true
                             if (city === 'Valenzuela') {
                                 isValenzuelaResident = true
@@ -219,62 +221,63 @@
                                 province = ""
                             }
                         }}>
-                        {#each cities as city}
-                            <option value={city}>{city}</option>
-                        {/each}
-                    </select>
-                    {#if user_info.city === "Valenzuela"}
-                        <label for="barangay-val"
-                               class="text-xl">
-                            Barangay<span class="text-secondary">*</span>
-                        </label>
-                        <select id="barangay-val"
-                                class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
-                                bind:value={barangaySelection}>
-                            {#each barangay as brgy}
-                                <option value={brgy}>{brgy}</option>
+                            {#each cities as city}
+                                <option value={city}>{city}</option>
                             {/each}
                         </select>
-                    {:else}
-                        <label for="barangay" class="text-xl">Barangay</label>
-                        <input type="text"
-                               id="barangay"
-                               class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-20 rounded-sm"
-                               value="" disabled/>
-                    {/if}
-
-                    <label for="mobile-number" class="text-xl">
-                        Contact Number<span class="text-secondary">*</span>
-                    </label>
-                    <div class="flex flex-row">
-                        <div>
-                            <select id="countryCode"
-                                    class="px-1 h-[30px] mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm text-center"
-                                    bind:value={countryCode}>
-                                {#each countryCodes as code}
-                                    <option value={code}>{code}</option>
+                        {#if user_info.city === "Valenzuela"}
+                            <label for="barangay-val"
+                                   class="text-xl">
+                                Barangay<span class="text-secondary">*</span>
+                            </label>
+                            <select id="barangay-val"
+                                    class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
+                                    bind:value={barangaySelection}>
+                                {#each barangay as brgy}
+                                    <option value={brgy}>{brgy}</option>
                                 {/each}
                             </select>
-                        </div>
-                        <div class="flex-grow">
+                        {:else}
+                            <label for="barangay" class="text-xl">Barangay</label>
                             <input type="text"
-                                   id="mobile-number"
-                                   class="px-1 h-[30px] mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
-                                   bind:value={contactNumber}/>
+                                   id="barangay"
+                                   class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-20 rounded-sm"
+                                   value="" disabled/>
+                        {/if}
+
+                        <label for="mobile-number" class="text-xl">
+                            Contact Number<span class="text-secondary">*</span>
+                        </label>
+                        <div class="flex flex-row">
+                            <div>
+                                <select id="countryCode"
+                                        class="px-1 h-[30px] mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm text-center"
+                                        bind:value={countryCode}>
+                                    {#each countryCodes as code}
+                                        <option value={code}>{code}</option>
+                                    {/each}
+                                </select>
+                            </div>
+                            <div class="flex-grow">
+                                <input type="text"
+                                       id="mobile-number"
+                                       class="px-1 h-[30px] mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
+                                       bind:value={contactNumber}/>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="mt-20 pb-16 flex flex-row justify-center">
-                <button class="w-[12rem] h-[2.2rem] uppercase font-bold bg-primary rounded-lg text-white mr-6"
-                        type="submit">
-                    Update Information
-                </button>
-                <button class="w-[12rem] h-[2.2rem] uppercase font-bold bg-white border border-primary rounded-lg text-primary"
-                        on:click={cancelUpdate}>
-                    Go back
-                </button>
-            </div>
-        </form>
+                <div class="mt-20 pb-16 flex flex-row justify-center">
+                    <button class="w-[12rem] h-[2.2rem] uppercase font-bold bg-primary rounded-lg text-white mr-6"
+                            type="submit">
+                        Update Information
+                    </button>
+                    <button class="w-[12rem] h-[2.2rem] uppercase font-bold bg-white border border-primary rounded-lg text-primary"
+                            on:click={cancelUpdate}>
+                        Go back
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+</Guard>
