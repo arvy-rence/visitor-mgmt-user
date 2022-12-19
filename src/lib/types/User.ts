@@ -13,4 +13,6 @@ export interface IReceivedUser {
     qr_code: string
     salt: string
     sex: boolean
+    is_student: boolean
+    school_code: string
 }

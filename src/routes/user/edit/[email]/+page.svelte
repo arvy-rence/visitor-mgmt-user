@@ -6,7 +6,8 @@
     import {updateUserInfo} from "$lib/hooks/user";
     import {goto} from "$app/navigation";
     import {onMount} from "svelte";
-    import Guard from "$components/Guard.svelte";
+    import Guard from "$lib/components/Guard.svelte";
+    import {schoolCodes} from "$lib/data/schools.js";
 
     // binding for data from +page.server.ts
     export let data
@@ -28,7 +29,9 @@
     let city = ""
     let barangaySelection = ""
     let province = ""
-    let sex = null
+    let sex
+    let isStudent = false
+    let schoolCode = ""
 
     // variable bindings for the dpp and terms
     let dpp = false;
@@ -44,7 +47,9 @@
         barangay: barangaySelection,
         province: province,
         sex: sex,
-        email: data?.email
+        email: data?.email,
+        is_student: isStudent,
+        school_code: schoolCode
     }
 
     $: console.log(user_info)
@@ -98,6 +103,10 @@
         }, 2000)
     }
 
+    const checkIfStudent = () => {
+
+    }
+
     const cancelUpdate = async () => {
         await goto(`/user/view/${data?.email}`)
         return
@@ -112,6 +121,8 @@
         barangaySelection = data?.barangay
         province = data?.province
         sex = data?.sex
+        isStudent = data?.is_student
+        schoolCode = data?.school_code
     })
 </script>
 
@@ -146,7 +157,7 @@
                         </label>
                         <input type="text"
                                id="first-name"
-                               class="px-1 mb-1 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
+                               class="px-1 mb-1 border border-gray-300 w-full bg-primary bg-opacity-20 rounded-sm"
                                bind:value={fullName}
                                disabled/>
                         <p class="text-primary opacity-70 text-sm mb-3">
@@ -191,6 +202,51 @@
                                        class="text-xl">Male</label>
                             </div>
                         </div>
+
+                        <div class="flex flex-row mb-2">
+                            <p class="text-xl pr-6">
+                                Are you a student?:<span class="text-secondary">*</span>
+                            </p>
+                            <div class="flex flex-row">
+                                <input type="radio"
+                                       id="is-student"
+                                       name="student"
+                                       class="px-1 -mt-1 mr-2 border border-gray-300"
+                                       bind:group={isStudent}
+                                       value={false}
+                                       on:change={() => {
+                                             schoolCode = "None"
+                                       }}/>
+                                <label for="is-student"
+                                       class="text-xl pr-10">No</label>
+                            </div>
+                            <div class="flex flex-row">
+                                <input type="radio"
+                                       id="is-not-student"
+                                       name="student"
+                                       class="px-1 -mt-1 mr-2 border border-gray-300"
+                                       bind:group={isStudent}
+                                       value={true}
+                                       on:change={() => {
+                                           schoolCode = schoolCodes[0].code
+                                       }}/>
+                                <label for="is-not-student"
+                                       class="text-xl">Yes</label>
+                            </div>
+                        </div>
+
+                        {#if isStudent}
+                            <label for="school-code" class="text-xl">
+                                School
+                            </label>
+                            <select id="school-code"
+                                    class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
+                                    bind:value={user_info.school_code}>
+                                {#each schoolCodes as school}
+                                    <option value={school.code}>{school.name}</option>
+                                {/each}
+                            </select>
+                        {/if}
 
                         <label for="province" class="text-xl">
                             Province<span class="text-secondary">*</span>
