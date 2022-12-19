@@ -17,7 +17,7 @@
 
     // reactive binding for the `user_info.full_name`
     let fullName = "";
-    let lastName = "";
+    // let lastName = "";
 
     // reactive binding for country code and contact number
     let countryCode = countryCodes[0]
@@ -101,10 +101,6 @@
         setTimeout(async () => {
             await goto(`/user/view/${data?.email}`)
         }, 2000)
-    }
-
-    const checkIfStudent = () => {
-
     }
 
     const cancelUpdate = async () => {

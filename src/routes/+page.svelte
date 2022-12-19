@@ -4,7 +4,7 @@
     import {store} from "$lib/hooks/auth"
 
     onMount(async () => {
-        if (store === null)
+        if ($store === null)
             await goto("/login");
         else {
             // await goto(`/user/view/${session.user.email}`)

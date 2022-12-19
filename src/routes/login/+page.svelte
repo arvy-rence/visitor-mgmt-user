@@ -15,7 +15,7 @@
             {
                 loading: 'Logging in',
                 success: 'Login Successful',
-                error: 'Error logging in'
+                error: 'Failed to login'
             },
             toastOptions,
         )
