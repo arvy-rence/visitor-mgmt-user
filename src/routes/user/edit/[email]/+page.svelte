@@ -33,10 +33,6 @@
     let isStudent = false
     let schoolCode = ""
 
-    // variable bindings for the dpp and terms
-    let dpp = false;
-    let terms = false;
-
     // contains the info to be sent to the backend
     $: user_info = {
         full_name: `${fullName.trim()}`,
@@ -69,15 +65,6 @@
         if (!checkInfo()) {
             // check if the user has agreed to the terms and conditions
             toast.error('Fields incomplete', toastOptions)
-            return
-        }
-        if (!terms) {
-            // check if the user has agreed to the terms
-            toast.error('You need to agree to the terms', toastOptions)
-            return
-        }
-        if (!dpp) {
-            toast.error('You need to agree to the data privacy and policy', toastOptions)
             return
         }
         // send the data to the backend

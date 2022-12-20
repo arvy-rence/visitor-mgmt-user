@@ -56,7 +56,6 @@
                        placeholder="Password*"
                        bind:value={password}/>
                 <span class="text-end font-semibold pt-2">
-
                     <a href="/recover-password" class="hover:underline">Forgot Password</a>
                 </span>
             </div>
