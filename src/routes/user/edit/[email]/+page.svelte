@@ -224,7 +224,7 @@
                             </label>
                             <select id="school-code"
                                     class="px-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
-                                    bind:value={user_info.school_code}>
+                                    bind:value={schoolCode}>
                                 {#each schoolCodes as school}
                                     <option value={school.code}>{school.name}</option>
                                 {/each}
