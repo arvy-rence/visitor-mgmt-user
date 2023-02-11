@@ -116,16 +116,22 @@
 <Guard>
   <Toaster />
   <div class="flex items-center justify-center pt-12">
-    <div class="fixed top-12 left-0">
-      <img
-        class="h-screen min-h-[600px]"
-        src="/images/register-banner.png"
-        alt=""
-      />
-    </div>
-    <div class="block w-2/5" />
+    {#if innerWidth > 1024}
+      <div class="fixed top-12 left-0">
+        <img
+          class="h-screen min-h-[600px]"
+          src="/images/register-banner.png"
+          alt=""
+        />
+      </div>
+
+      <div class="block w-2/5 " />
+    {/if}
     <div
-      class="flex flex-col items-center text-primary justify-evenly w-1/2 font-base"
+      class="flex flex-col items-center text-primary justify-evenly font-base {innerWidth >
+      1024
+        ? 'w-1/2'
+        : 'w-full'}"
     >
       <img src="/images/logo.png" alt="" class="w-[10rem] mb-4" />
       <p class="text-primary text-opacity-70 pb-2 uppercase">
