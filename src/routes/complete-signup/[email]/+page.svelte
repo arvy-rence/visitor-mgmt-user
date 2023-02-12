@@ -27,7 +27,7 @@
   let isValenzuelaResident = false;
   let city = "";
   let barangaySelection = "";
-  let provinceSelection = "";
+  let provinceSelection = "Metro Manila";
   let sex = null;
   let isStudent = false;
   let schoolCode = "None";
