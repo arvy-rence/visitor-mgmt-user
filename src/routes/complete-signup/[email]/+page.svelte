@@ -133,7 +133,7 @@
 
 <Toaster />
 <div class="flex items-center justify-center pt-12">
-  {#if innerWidth > 1024}
+  {#if innerWidth > 750}
     <div class="fixed top-12 left-0">
       <img
         class="h-screen min-h-[600px]"
