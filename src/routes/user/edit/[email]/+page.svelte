@@ -116,7 +116,7 @@
 <Guard>
   <Toaster />
   <div class="flex items-center justify-center pt-12">
-    {#if innerWidth > 750}
+    {#if innerWidth > 1200}
       <div class="fixed top-12 left-0">
         <img
           class="h-screen min-h-[600px]"
@@ -126,10 +126,10 @@
       </div>
 
       <div class="block w-2/5 " />
-    {/if}3
+    {/if}
     <div
       class="flex flex-col items-center text-primary justify-evenly font-base {innerWidth >
-      1024
+      1200
         ? 'w-1/2'
         : 'w-full'}"
     >
