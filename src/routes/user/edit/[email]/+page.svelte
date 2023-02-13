@@ -3,7 +3,7 @@
   import { countryCodes } from "$lib/data/countryCode.js";
   import toast, { Toaster } from "svelte-french-toast";
   import { toastOptions } from "$lib/util/options";
-  import { updateUserInfo } from "$lib/hooks/user";
+  import { upsertUserInfo } from "$lib/hooks/user";
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
   import Guard from "$lib/components/Guard.svelte";
@@ -71,7 +71,7 @@
     }
     // send the data to the backend
     await toast.promise(
-      updateUserInfo(user_info),
+      upsertUserInfo(user_info),
       {
         error: "Failed to update user information",
         success: "Successfully updated account details",
