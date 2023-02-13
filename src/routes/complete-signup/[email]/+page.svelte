@@ -145,16 +145,18 @@
     <div class="block w-2/5 " />
   {/if}
   <div
-    class="flex flex-col items-center text-primary justify-evenly font-base {innerWidth >
+    class="flex flex-col items-center text-primary sm:justify-center md:justify-evenly font-base {innerWidth >
     1200
       ? 'w-1/2'
       : 'w-full'}"
   >
     <img src="/images/logo.png" alt="" class="w-[10rem] mb-4" />
-    <p class="text-primary text-opacity-70 pb-2 uppercase">
+    <p class="text-primary text-opacity-70 pb-2 uppercase text-center">
       Enter your details to complete your registration
     </p>
-    <p class="text-secondary text-opacity-80 pb-10 uppercase font-bold">
+    <p
+      class="text-secondary text-opacity-80 pb-10 uppercase font-bold text-center"
+    >
       DO NOT CLOSE THIS WINDOW TO PROPERLY COMPLETE YOUR REGISTRATION
     </p>
     <form on:submit|preventDefault={submitInfo} class="w-[90%]">
@@ -202,8 +204,8 @@
             You can only change this once
           </p>
 
-          <div class="flex flex-row mb-2">
-            <p class="text-xl pr-6">
+          <div class="flex flex-row flex-wrap mb-2">
+            <p class="text-xl pr-2">
               Sex:<span class="text-secondary">*</span>
             </p>
             <div class="flex flex-row">
@@ -241,7 +243,7 @@
             </div>
           </div>
 
-          <div class="flex flex-row mb-2">
+          <div class="flex flex-row mb-2 flex-wrap">
             <p class="text-xl pr-6">
               Are you a student in Valenzuela?:
               <span class="text-secondary">*</span>

@@ -128,7 +128,7 @@
       <div class="block w-2/5 " />
     {/if}
     <div
-      class="flex flex-col items-center text-primary justify-evenly font-base {innerWidth >
+      class="flex flex-col items-center text-primary sm:justify-center md:justify-evenly font-base {innerWidth >
       1200
         ? 'w-1/2'
         : 'w-full'}"
@@ -217,9 +217,11 @@
               </div>
             </div>
 
-            <div class="flex flex-row mb-2">
+            <div class="flex flex-row mb-2 flex-wrap">
               <p class="text-xl pr-6">
-                Are you a student?:<span class="text-secondary">*</span>
+                Are you a student in Valenzuela?:<span class="text-secondary"
+                  >*</span
+                >
               </p>
               <div class="flex flex-row">
                 <input
