@@ -69,6 +69,10 @@
       toast.error("Fields incomplete", toastOptions);
       return;
     }
+    if (user_info.full_name.length >= 100) {
+      toast.error("Name limited to 100 characters only", toastOptions);
+      return;
+    }
     // send the data to the backend
     await toast.promise(
       upsertUserInfo(user_info),
@@ -156,6 +160,7 @@
             <input
               type="text"
               id="first-name"
+              pattern="[a-zA-Z ]+ "
               class="p-1 mb-1 border border-gray-300 w-full bg-primary bg-opacity-20 rounded-sm"
               bind:value={fullName}
               disabled

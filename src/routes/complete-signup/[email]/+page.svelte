@@ -24,6 +24,8 @@
 
   // temporary binding for other variables
   let birthday = null;
+  let currentYear = new Date().getFullYear();
+
   let isValenzuelaResident = false;
   let city = "";
   let barangaySelection = "";
@@ -36,10 +38,18 @@
   let dpp = false;
   let terms = false;
 
+  // validate phone number regex 10 charactrs long and only numbers
+  const validatePhoneNumber = (number: string) => {
+    const regex = new RegExp(/^[0-9]+$/);
+    return regex.test(number);
+  };
+
   // contains the info to be sent to the backend
   $: user_info = {
     full_name: `${firstName.trim()} ${lastName.trim()}`,
-    contact_number: `${countryCode}${contactNumber.trim()}`,
+    contact_number: `${countryCode}${
+      validatePhoneNumber(contactNumber) ? contactNumber : ""
+    }`,
     birthday: birthday,
     is_valenzuela_resident: isValenzuelaResident,
     city: city,
@@ -72,6 +82,10 @@
       toast.error("Fields incomplete", toastOptions);
       return;
     }
+    if (user_info.full_name.length >= 100) {
+      toast.error("Name limited to 100 characters only", toastOptions);
+      return;
+    }
     if (!terms) {
       // check if the user has agreed to the terms
       toast.error("You need to agree to the terms", toastOptions);
@@ -95,7 +109,7 @@
       toastOptions
     );
 
-    toast("Redirecting to dashboard", {
+    toast("Redirecting to Login Page", {
       ...toastOptions,
       icon: "✅",
       duration: 2000,
@@ -187,9 +201,12 @@
           <input
             type="text"
             id="last-name"
-            class="p-1 mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
+            class="p-1 mb-1 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
             bind:value={lastName}
           />
+          <p class="text-primary opacity-70 text-sm mb-3">
+            Add name extensions in the Last Name field if applicable
+          </p>
 
           <label for="birthday" class="text-xl">
             Birthday<sup class="text-secondary">*</sup>
@@ -199,6 +216,8 @@
             id="birthday"
             class="p-1 mb-1 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
             bind:value={birthday}
+            min={new Date().getFullYear() - 100 + "-01-01"}
+            max={new Date().getFullYear() - 6 + "-12-31"}
           />
           <p class="text-primary opacity-70 text-sm mb-3">
             You can only change this once
@@ -369,6 +388,7 @@
             <div class="flex-grow">
               <input
                 type="text"
+                pattern="[0-9]*"
                 id="mobile-number"
                 class="p-1 h-[30px] mb-3 border border-gray-300 w-full bg-primary bg-opacity-10 rounded-sm"
                 bind:value={contactNumber}
@@ -420,4 +440,7 @@
 </div>
 
 <style>
+  input:invalid {
+    border-color: red;
+  }
 </style>

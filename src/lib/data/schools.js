@@ -1,5 +1,8 @@
 export const schoolCodes = [
     // {code: "None", name: "Not a Student"},
+    {code: "PLV", name: "Pamantasan ng Lungsod ng Valenzuela"},
+    {code: "VALPOLY", name: "Valenzuela Polytechnic College"},
+    
     {code: "ABNHS", name: "Arkong Bato NHS"},
     {code: "DNHS", name: "Dalandanan NHS"},
     {code: "MNHS", name: "Malanday NHS"},
