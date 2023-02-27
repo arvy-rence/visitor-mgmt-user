@@ -4,8 +4,8 @@
   import toast, { Toaster } from "svelte-french-toast";
   import { toastOptions } from "$lib/util/options";
 
-  let email: String;
-  let password: String;
+  let email: string;
+  let password: string;
 
   async function login() {
     const user = getUserDetails(email, password);
@@ -92,7 +92,7 @@
       >
         Log in
       </button>
-      <h2 class="text-center">
+      <h2 class="text-center text-lg text-secondary mt-2">
         No account?
         <span class="font-bold">
           <a href="/signup">Register here.</a>

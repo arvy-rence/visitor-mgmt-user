@@ -357,21 +357,21 @@
             </div>
           </div>
         </div>
-        <div class="mt-20 pb-16 flex flex-row justify-center">
-          <button
-            class="w-[12rem] h-[2.5rem] uppercase font-bold bg-primary rounded-lg text-white mr-6"
-            type="submit"
-          >
-            Update Information
-          </button>
-          <button
-            class="w-[12rem] h-[2.5rem] uppercase font-bold bg-white border border-primary rounded-lg text-primary"
-            on:click={cancelUpdate}
-          >
-            Go back
-          </button>
-        </div>
       </form>
+      <div class="mt-20 pb-16 flex flex-row justify-center">
+        <button
+          class="w-[12rem] h-[2.5rem] uppercase font-bold bg-primary rounded-lg text-white mr-6"
+          on:click={submitInfo}
+        >
+          Update Information
+        </button>
+        <button
+          class="w-[12rem] h-[2.5rem] uppercase font-bold bg-white border border-primary rounded-lg text-primary"
+          on:click={cancelUpdate}
+        >
+          Go back
+        </button>
+      </div>
     </div>
   </div>
 </Guard>

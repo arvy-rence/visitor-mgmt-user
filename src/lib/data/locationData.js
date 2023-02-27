@@ -29,6 +29,11 @@ export const barangay = [
     "Veinte Reales",
     "Polo",
     "Wawang Pulo",
+    "Bagbaguin",
+    "Paso de blas ",
+    "Bignay",
+    "Parada",
+    "Tagalag"
 ]
 export const cities = [
     "Valenzuela",
