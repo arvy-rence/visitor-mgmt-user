@@ -101,7 +101,7 @@
         >
           SIGN UP
         </button>
-        <h2 class="text-center">
+        <h2 class="text-center text-lg text-secondary mt-2">
           Already have an account?
           <span class="font-bold">
             <a href="/login">Login here.</a>
