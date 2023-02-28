@@ -185,7 +185,7 @@
 
             <div class="flex flex-row mb-2">
               <p class="text-xl pr-6">
-                Sex:<span class="text-secondary">*</span>
+                Gender:<span class="text-secondary">*</span>
               </p>
               <div class="flex flex-row">
                 <input
