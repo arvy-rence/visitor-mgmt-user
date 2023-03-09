@@ -8,6 +8,7 @@ export const barangay = [
     "Parada",
     "Punturin",
     "Dalandanan",
+    "Lawang Bato",
     "Lingunan",
     "Ugong",
     "Bagbaguin",
